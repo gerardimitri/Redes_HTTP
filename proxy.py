@@ -1,4 +1,10 @@
+import socket
 from utils import *
+
+tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# lo conectamos al puerto acordado
+tcp_socket.connect(('localhost', 8000))
 
 def parseHTTP(data):
     """
