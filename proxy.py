@@ -1,10 +1,9 @@
 import socket
 from utils import *
+import json
 
-tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# lo conectamos al puerto acordado
-tcp_socket.connect(('localhost', 8000))
+HOST = "example.com"
+PORT = 8000
 
 def parseHTTP(data):
     """
@@ -19,11 +18,7 @@ def buildHTTP(headers, body):
     """
     Builds an HTTP response from the given headers and body.
     """
-    response = ''
-    for header in headers:
-        response += header + '\r\n'
-    response += '\r\n' + body
-    return response
+    return str(headers) + str(body)
 
 def headerToJson(headers):
     """
@@ -40,4 +35,3 @@ def bodyToJson(body):
     Converts the body of an HTTP request to a JSON object.
     """
     return json.loads(body)
-
