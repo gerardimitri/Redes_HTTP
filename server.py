@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import socket
 from proxy import *
+import json
 
 HTTP_RESPONSE_BODY = '''
 <!DOCTYPE html>
@@ -18,12 +19,22 @@ HTTP_RESPONSE_HEAD = f'''HTTP/1.1 200 OK\r\n
 Host: example.com\r\n
 Content-Type: text/html; charset=UTF-8\r\n
 Content-Length: {len(HTTP_RESPONSE_BODY)}\r\n
-Connection: close\r\n\r\n
+Connection: close\r\n
 '''
+
+HOST = "localhost" #"example.com"
+PORT = 8000
+
+file_path = "config.json"
+with open(file_path) as j:
+     data_json = json.load(j)
+
+for key in data_json:
+    HTTP_RESPONSE_HEAD += f"{key}: {data_json[key]}\r\n"
 
 # definimos el tamaño del buffer de recepción ¿Cómo se ven los trozos de mensaje recibidos si usamos 'buff_size = 2' ?
 buff_size = 4096
-address = ('localhost', 8000)
+address = (HOST, PORT)
 
 print('Creando socket - Servidor')
 # armamos el socket
@@ -46,14 +57,14 @@ while True:
 
     # luego recibimos el mensaje usando la función que programamos
     received_message = connection_socket.recv(buff_size).decode()
+    received_message_headers = parseHTTP(received_message).get('headers')
 
     print(' -> Se ha recibido el siguiente mensaje: {}'.format(received_message))
-    print(parseHTTP(received_message))
-    print(buildHTTP(['HTTP/1.1 200 OK', 'Content-Type: application/json'], '{"message": "Hello World"}'))
 
     # respondemos
     response_message = buildHTTP(HTTP_RESPONSE_HEAD, HTTP_RESPONSE_BODY).encode()
     connection_socket.send(response_message)
+
 
     # cerramos la conexión
     # notar que la dirección que se imprime indica un número de puerto distinto al 8888

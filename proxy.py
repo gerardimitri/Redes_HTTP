@@ -14,11 +14,14 @@ def parseHTTP(data):
     body = data[1]
     return {'headers': headers, 'body': body}
 
+
 def buildHTTP(headers, body):
     """
     Builds an HTTP response from the given headers and body.
     """
-    return str(headers) + str(body)
+    return str(headers) + "\r\n" + str(body)
+
+
 
 def headerToJson(headers):
     """
