@@ -106,7 +106,7 @@ def send_full_message(receiver_socket, message, end_of_message, address, receive
         message_sent_so_far += message_slice
 
         # si encontramos el end_of_message detenemos el ciclo y retornamos pues ya se envió el mensaje completo
-        if contains_end_of_message(message_sent_so_far, end_of_message):
+        if end_of_message.encode() in message_sent_so_far:
             break
 
         # de lo contrario actualizamos el byte inicial para enviar el siguiente trozo
