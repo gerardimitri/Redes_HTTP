@@ -28,6 +28,12 @@ def getUri(headers):
     headers = headers.split('\r\n')
     return headers[0].split(' ')[1]
 
+def getHeaderFirstLine(headers):
+    """
+    Returns the first line of an HTTP header.
+    """
+    return headers.split('\r\n')[0]
+
 def headerToJson(headers):
     """
     Converts the headers of an HTTP request to a JSON object.
@@ -45,6 +51,15 @@ def bodyToJson(body):
     Converts the body of an HTTP request to a JSON object.
     """
     return json.loads(body)
+
+def jsonToHeader(json):
+    """
+    Converts a JSON object to an HTTP header.
+    """
+    header = ""
+    for key in json:
+        header += key + ": " + str(json[key]) + "\r\n"
+    return header
 
 def replaceForbiddenWords(aString, ListOfDictsOfForbiddenWords):
     """

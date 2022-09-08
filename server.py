@@ -99,12 +99,14 @@ while True:
         print(" -> Mensaje recibido: " + message)
         message = parseHTTP(message)
         message_headers = message.get('headers')
-        message_length = int(headerToJson(message_headers).get('Content-Length'))
+        header_first_line = getHeaderFirstLine(message_headers) + "\r\n"
+        header_json = headerToJson(message_headers)
         message_body = message.get('body')
         message_body = replaceForbiddenWords(message_body, forbidden_words)
+        header_json['Content-Length'] = len(message_body + message_headers + "\r\n")
+        message_headers = header_first_line + jsonToHeader(header_json)
         message = buildHTTP(message_headers, message_body).encode()
-    send_full_message(connection_socket, message, end_of_message="<\html>", address=client_address, receiver_buff_size=message_length)
-
+    connection_socket.send(message)
     #print ("Enviamos cositas... \n" + response_message)
 
     # cerramos la conexión
