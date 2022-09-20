@@ -2,7 +2,6 @@
 import socket
 from proxy import *
 import json
-import utils
 
 HTTP_RESPONSE_BODY = '''
 <!DOCTYPE html>
@@ -115,5 +114,5 @@ while True:
     client_socket.close()
     print("conexión con {} ha sido cerrada".format(address))
 
-    break
+    # break
     # seguimos esperando por si llegan otras conexiones
