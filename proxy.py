@@ -1,4 +1,3 @@
-import socket
 from utils import *
 import json
 
@@ -63,7 +62,7 @@ def jsonToHeader(json):
 
 def replaceForbiddenWords(aString, ListOfDictsOfForbiddenWords):
     """
-    Replaces forbidden words in a string with asterisks.
+    Replaces forbidden words in list of dictionaries with the corresponding replacement.
     """
     for dict in ListOfDictsOfForbiddenWords:
         for key in dict:

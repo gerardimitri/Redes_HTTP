@@ -3,33 +3,29 @@ import socket
 from proxy import *
 import json
 
-HTTP_RESPONSE_BODY = '''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Hello World</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
-</html>
-'''
+# HTTP_RESPONSE_BODY = '''
+# <!DOCTYPE html>
+# <html lang="en">
+# <head>
+#     <title>Hello World</title>
+# </head>
+# <body>
+#     <h1>Hello World</h1>
+# </body>
+# </html>
+# '''
 
-HTTP_RESPONSE_HEAD = f'''HTTP/1.1 200 OK\r\n
-Host: example.com\r\n
-Content-Type: text/html; charset=UTF-8\r\n
-Content-Length: {len(HTTP_RESPONSE_BODY)}\r\n
-Connection: close\r\n
-'''
+# HTTP_RESPONSE_HEAD = f'''HTTP/1.1 200 OK\r\n
+# Host: example.com\r\n
+# Content-Type: text/html; charset=UTF-8\r\n
+# Content-Length: {len(HTTP_RESPONSE_BODY)}\r\n
+# Connection: close\r\n
+# '''
 
 HTTP_FORBIDDEN = "HTTP/1.1 403 FORBIDDEN\r\n\r\n"
-
 HTTP_HEAD_ADDONS = ''
-
 HOST = "localhost" #"example.com"
 PORT = 8000
-DESTINATION_ADDRESS = ""
-DESTINATION_PORT = 5000
 
 file_path = "config.json"
 with open(file_path) as j:
@@ -55,8 +51,6 @@ print('Creando socket - Servidor')
 # armamos el socket
 # los parámetros que recibe el socket indican el tipo de conexión
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-destination_address = (DESTINATION_ADDRESS, DESTINATION_PORT)
 
 # lo conectamos al server, en este caso espera mensajes localmente en el puerto 8888
 server_socket.bind(address)
